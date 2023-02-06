@@ -39,8 +39,12 @@ class Server extends EventEmitter {
     this.emit("response", `Tasks:\n${this.tasksString()}`);
   }
   del(args) {
-    delete this.tasks[args[0]];
-    this.emit("response", `Deleted task ${args[0]}`);
+    if (!this.tasks[args[0]]) {
+      this.emit("response", `This task ${args[0]} does not exist`);
+    } else {
+      delete this.tasks[args[0]];
+      this.emit("response", `Deleted task ${args[0]}`);
+    }
   }
 }
 
